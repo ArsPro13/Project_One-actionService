@@ -2,7 +2,7 @@ from urllib.request import urlopen
 from urllib.request import Request
 import re
 
-f = open('recipes.txt', 'a')
+f = open('test.txt', 'a')
 
 spis = []
 for i in range(1, 2000):
