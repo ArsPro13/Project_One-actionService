@@ -2,11 +2,13 @@ from flask import Flask, render_template, request
 import importlib
 import ast
 import os
+import models
+from initApp import app
 from inspect import getmembers, isfunction
 
 
 def toweb(f, url_site: str, parameters: dict):
-    app = Flask(__name__)
+    #app = Flask(__name__)
 
     @app.route('/' + url_site, methods=['GET', 'POST'])
     def myfunc():
