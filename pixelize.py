@@ -1,4 +1,5 @@
 from PIL import Image
+from fpdf import FPDF
 
 
 # following subfunctions are made for different types of picture's modifying
@@ -39,18 +40,21 @@ def cosine_sqr(x1, x2):
 
 # functions for changing cur_color to one of the basic's
 def change(pix, b_colors):
-    x = [dist(k, pix) for k in b_colors]
-    return b_colors[x.index(min(x))]
+    x = [dist(k, pix) for k in b_colors.keys()]
+    return list(b_colors.keys())[x.index(min(x))]
 
 
-def color_set(colors, basic_colors):
-    color = change(av_arifm(colors), basic_colors)  # сhoose a version
-    # color = basic(colors)
-    return color
+class PDF(FPDF):
+    def header(self):
+        self.set_font("Arial", 'B', 20)
+        self.cell(0, 10, "Intruction", ln=True, align='C')
 
 
 # main service funtion
 def pixelize(im, pix_size, basic_colors):
+    fpdf = PDF('P', 'mm', 'Letter')
+    fpdf.add_page()
+    instr = {}
     n, m = im.size[0], im.size[1]
     res = Image.new("RGB", (n, m), color=0)
     for i in range(0, n, pix_size):
@@ -64,38 +68,36 @@ def pixelize(im, pix_size, basic_colors):
                         continue
                     points[(i + x, j + y)] = im.getpixel((i + x, j + y))
             colors = list(sorted(points.values()))
-            color = color_set(colors, basic_colors)
+            color = change(av_arifm(colors), basic_colors)
+            if color in instr:
+                instr[color][0].append((i // pix_size, j // pix_size))
+                instr[color][1] += 1
+            else:
+                instr[color] = [[], 0]
             for point in points.keys():
                 res.putpixel(point, color)
-    res.show()
-    return res
-
-
-# function which generates the instructions for customer (soon)
-def write_the_instructions(im, pixel_size):
-    instr = {}
-    for i in range(im.size[0]):
-        for j in range(im.size[1]):
-            pix = im.getpixel((i, j))
-            if pix in instr:
-                instr[pix] += 1
-            else:
-                instr[pix] = 1
     for x in instr.keys():
-        instr[x] //= pixel_size ** 2
-    return instr
+        fpdf.set_font("Arial", size=16)
+        fpdf.cell(0, 10, f"{basic_colors[x]}: {instr[x][1]}", ln=True)
+    for x in instr.keys():
+        fpdf.set_font("Arial", 'B', size=16)
+        fpdf.cell(0, 10, f"{basic_colors[x]} squares are:", ln=True, align='C')
+        fpdf.set_font("Arial", size=16)
+        fpdf.multi_cell(0, 20, f"{str((instr[x][0]))[1:-1]}")
+    fpdf.output("output.pdf")
+    # res.show()
+    return res
 
 
 # starts the process
 def process():
     image = Image.open("img.jpg")  # choose the image
-    pixel_size = 3  # set pixel_size
-    basic_colors = [(0, 0, 0), (255, 255, 255), (255, 0, 0), (255, 255, 0),
-                    (0, 255, 0), (0, 255, 255), (0, 0, 255), (255, 0, 255)] # in work
+    pixel_size = 20  # set pixel_size
+    basic_colors = {(0, 0, 0): "Black", (255, 255, 255): "White", (255, 0, 0): "Red", (255, 255, 0): "Yellow",
+                    (0, 255, 0): "Green", (0, 255, 255): "Heaven", (0, 0, 255): "Blue",
+                    (255, 0, 255): "Violet"}  # in work
     new_image = pixelize(image, pixel_size, basic_colors)
-    # the next is not ready now
-    instructions = write_the_instructions(new_image, pixel_size)
-    print(instructions)
+    new_image.save("output.jpg")
 
 
 process()
