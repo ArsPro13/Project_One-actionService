@@ -1,0 +1,31 @@
+<head>
+    <title>{{parameters['title']}}</title>
+</head>
+<!-- {{form.hidden_tag()}} -->
+<h1>{{parameters['header']}}</h1>
+
+<form method="POST" action="/{{url_site}}" enctype="multipart/form-data">
+{{ form.csrf_token() }}
+{% for i in range(parameters['input']['text']) %}
+    {{form.text_forms[i]}}
+{% endfor %}
+{% for i in range(parameters['input']['files']) %}
+    {{form.file_forms[i]}}
+{% endfor %}
+{{form.submit}}
+</form>
+{% if result %}
+    {% if result.__class__ == 'tuple' %}
+        {% for i in range(len(parameters['output'])) %}
+            {% set count = 0 %}
+            {% if parameters[i] == '__file__' %}
+                <a href="{{url_for('download', path=result[i - count])}}">
+            {% elif parameters[i] == '__value__' %}
+                <p>{{result[i - count]}}}</p>
+            {% else %}
+                <p>{{parameters['output'][i]}}</p>
+                {% set count = count + 1 %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endif %}

@@ -1,1 +1,1 @@
-mysite function.py {'history':True, 'account':True, 'title':'name', 'header':'abc', 'input':{'files': 3, 'forms': 1}}
+mysite function.py {'history':False, 'account': False, 'title': 'Конкатинатор', 'header': 'Приложи 2 файла, если хочешь, чтобы они склеились', 'button': 'отконкотенировать','input':{'files': 2, 'text': 0}, 'error': 'Кажется вы загрузили не каринку', 'output': ['Скачать сконкотинированный файл:', '__file__']}
