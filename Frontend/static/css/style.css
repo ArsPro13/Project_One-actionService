@@ -14,11 +14,11 @@
 }
 
 .HeaderDivContLeft {
-  font-size: 15px;
+  font-size: 25px;
   display: inline;
   float: left;
-  margin-left: 10px;
-  /*margin-top: 15px;*/
+  margin-left: 3%;
+  margin-top: 15px;
   text-align: center;
   line-height: 15px;
 }
@@ -140,6 +140,7 @@ footer {
   text-align: center;
   width: 100%;
 }
+
 .btn {
   width: 200px;
   height:10px;
@@ -152,6 +153,7 @@ footer {
   margin-bottom:20px;
   left:8px;
 }
+
 .btn:hover .submenu {
     display:block;
 }
