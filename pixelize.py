@@ -17,4 +17,4 @@ def process(path):  # path to image in input
     new_image.save("output.png")
     img_convert.count_pixels(new_image, basic_colors, pixel_size)
     new_path = img_convert.write_the_instruction(path, new_image, basic_colors, pixel_size)
-    return new_path
+    return (new_path, new_image)
