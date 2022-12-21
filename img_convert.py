@@ -3,7 +3,7 @@ import numpy as np
 from PIL import Image
 
 
-def write_the_instruction(path, new_img, basic_colors, pixel_size):
+def write_the_instruction(path, dir_name, new_img, basic_colors, pixel_size):
     fpdf = FPDF()
     fpdf.add_page()
     fpdf.set_font("Arial", 'B', size=20)
@@ -14,7 +14,7 @@ def write_the_instruction(path, new_img, basic_colors, pixel_size):
         fpdf.text(65, 10 * x + 50, f"{list(basic_colors.values())[x + 4][0]}: {list(basic_colors.values())[x + 4][1]}")
         fpdf.text(110, 10 * x + 50, f"{list(basic_colors.values())[x][0]}: {list(basic_colors.values())[x][1]}")
     fpdf.image(path, x=10, y=130, w=90)
-    fpdf.image("output.png", x=110, y=130, w=90)
+    fpdf.image(f"{dir_name}/output.png", x=110, y=130, w=90)
     width, height = new_img.size
     fpdf.add_page()
     k = 0
@@ -43,8 +43,8 @@ def write_the_instruction(path, new_img, basic_colors, pixel_size):
                         r, g, b = new_img.getpixel((x + i, y + j))
                         fpdf.set_fill_color(r, g, b)
                         fpdf.ellipse((x // pixel_size) * 6 + 15, (y // pixel_size) * 6 + 25, 5, 5, "DF")
-    fpdf.output(f"{path[:-4]}_instruction.pdf")
-    return f"{path[:-4]}_instruction.pdf"
+    fpdf.output(f"{dir_name}/instruction.pdf")
+    return f"{dir_name}/instruction.pdf"
 
 
 def fs_dither(img, nc):
