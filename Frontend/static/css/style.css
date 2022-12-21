@@ -1,6 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
 *{
   padding: 0;
   margin: 0;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  width:100%;
+  background-color: #edfafe;
+
+}
+
+h2 {
+  font-size: 35px;
+}
+
+h3 {
+  font-size: 25px;
 }
 
 .HeaderDivContRight {
@@ -17,7 +34,7 @@
   font-size: 25px;
   display: inline;
   float: left;
-  margin-left: 3%;
+  margin-left: 1%;
   margin-top: 15px;
   text-align: center;
   line-height: 15px;
@@ -45,7 +62,8 @@
 
 header {
   margin: 0 0;
-  background-color: rgb(69, 140, 106);
+  background-color: #182434;
+  color: #fff;
   width: 100%; 
   height: 50px;
   position: -webkit-sticky; 
@@ -56,20 +74,20 @@ header {
 }
 
 .contLeft {
-  font-size: large;
   display: inline;
   float: left;
   margin-left: 3%;
   margin-top: 15px;
   text-align: center;
   line-height: 30px;
-  font-size: 30px;
+  font-size: 20px;
   width: 45%;
 }
 
 footer {
   margin-top: -1;
-  background-color: rgb(69, 140, 106);
+  background-color: #182434;
+  color: #fff;
   width: 100%; 
   height: 200px;
   top: 0; 
@@ -110,9 +128,9 @@ footer {
   float: left;
   z-index:0;  
   color:white;
-  font-size:28px;
+  font-size:25px;
   border-radius: 5%;
-  background-color: rgb(121, 176, 149);
+  background-color: #213A5C;
   background-size:cover;
   z-index:0; 
   display: flex;
@@ -132,7 +150,9 @@ footer {
   height: 65px;
   width: 300px;
   border-radius: 40px;
-  background-color: rgb(250, 98, 81);
+  font-size: 20px;
+  color: #fff;
+  background-color: #91AEC4;
 }
 
 .textUnderSlider {
@@ -141,20 +161,18 @@ footer {
   width: 100%;
 }
 
-.btn {
-  width: 200px;
-  height:10px;
-  border-radius:20px;
-  padding:20px 10px;
-  background-color: rgb(121, 176, 149);
+.menu-btn {
+  margin-top: -2px;
+  width: 20px;
+  height:20px;
+  border-radius:5px;
+  background-color: #294771;
   color: #fff;
-  font-family: Verdana;
   text-align: center;
   margin-bottom:20px;
-  left:8px;
 }
 
-.btn:hover .submenu {
+.menu-btn:hover .submenu {
     display:block;
 }
 
@@ -163,41 +181,44 @@ footer {
   margin: 0;
   padding: 0;
   display:none;
-  font-family: Verdana;
+  font-size: 15px;
 }
 
 .submenu > li {
-    position: fixed;
-    left:8px;
-    
+  left: -8px;
+  position: fixed;
   display: block;
-  width: 200px;
+  width: 100px;
   padding:20px 10px;
-  background-color: #bbb;
+  background-color: #182434;
   text-align: center;
 }
 .q1 {
-    margin-top:15px;
+    margin-top:5px;
     position: fixed;
     
 }
 .q2 {
-    margin-top:70px;
+    margin-top:50px;
     position: fixed;
     
 }
 .q3 {
-   margin-top:120px;
+   margin-top:95px;
     position: fixed;
     
 }
 
 .q1:hover {
-    background-color: rgb(121, 176, 149);
+    background-color: #213A5C;
 }
 .q2:hover {
-    background-color: rgb(121, 176, 149);
+    background-color: #213A5C;
 }
 .q3:hover {
-    background-color: rgb(121, 176, 149);
+    background-color: #213A5C;
+}
+
+.more-symbol {
+  font-size: 20px;
 }
