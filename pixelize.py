@@ -2,7 +2,7 @@ import img_convert
 from PIL import Image
 
 
-def process(path):  # path to image in input
+def process(path, dir_name):  # path to image in input
     image = Image.open(path)
     pixel_size = 4  # set pixel_size
     number_of_pins = 360  # set how many pins on lines (multiplied by pixel_size)
@@ -14,7 +14,8 @@ def process(path):  # path to image in input
     new_image = img_convert.fs_dither(new_image, 2)
     new_image = img_convert.back_to_size(new_image, pixel_size)
     # new_image.show()
-    new_image.save("output.png")
+    new_image.save(f"{dir_name}/output.png")
     img_convert.count_pixels(new_image, basic_colors, pixel_size)
-    new_path = img_convert.write_the_instruction(path, new_image, basic_colors, pixel_size)
-    return (new_path, new_image)
+    new_path = img_convert.write_the_instruction(path, dir_name, new_image, basic_colors, pixel_size)
+    return ("output.png", "instruction.pdf")
+
