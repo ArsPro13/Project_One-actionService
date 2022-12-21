@@ -1,0 +1,1 @@
+pixelize pixelize.py {'header': 'Загрузите фото', 'title': 'пикселиратор', 'input': {'files': 1, 'text': 0}, 'output': ['__file__', '__file__'], 'button': 'получить инструкциию и фото'}
