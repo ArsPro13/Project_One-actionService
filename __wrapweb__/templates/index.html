@@ -1,0 +1,27 @@
+<head>
+    <title>{{parameters['title']}}</title>
+</head>
+<h1>{{parameters['header']}}</h1>
+
+<form method="POST" enctype="multipart/form-data">
+    {% for i in range(parameters['input']['text']) %}
+        <input type="text" name="text{{i}}">
+    {% endfor %}
+    {% for i in range(parameters['input']['files']) %}
+        <input type="file" name="file{{i}}">
+    {% endfor %}
+    <input type=submit value={{parameters['button']}}>
+</form>
+{% if result %}
+    {% for i in range(l) %}
+    {% set count = 1 %}
+        {% if parameters['output'][i] == '__file__' %}
+            <a href="/download/{{result[i - count]}}">{{result[i - count]}}</a>
+        {% elif parameters['output'][i] == '__value__' %}
+            <p>{{result[i - count]}}</p>
+        {% else %}
+            <p>{{parameters['output'][i]}}</p>
+        {% set count = count + 1 %}
+        {% endif %}
+    {% endfor %}
+{% endif %}

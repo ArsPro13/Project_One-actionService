@@ -1,8 +1,4 @@
-from flask import Flask, render_template, request, flash
-from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileRequired
-from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired
+from flask import Flask, render_template, request
 import importlib
 import ast
 import os
@@ -10,54 +6,48 @@ import os
 # from initApp import app
 from inspect import getmembers, isfunction
 from werkzeug.utils import secure_filename
-from flask import send_file
-import jinja2
+from flask import send_from_directory
 
-
-class MyForm(FlaskForm):
-    def __init__(self, input_dict: dict, submit_label: str, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.file_forms: list = [FileField(validators=[FileRequired()]) for _ in range(input_dict['files'])]
-        self.text_forms: list = [StringField('name', validators=[DataRequired()]) for _ in range(input_dict['text'])]
-        self.submit = SubmitField(submit_label)
+CURRENT_PATH = os.getcwd()
+UPPER_PATH = os.path.dirname(os.getcwd())
 
 
 def toweb(function, url_site: str, parameters: dict):
-    app = Flask(__name__, template_folder='__wrapweb__')
-    app.config['UPLOAD_FOLDER'] = os.getcwd() + '/__wrapweb__/'
+    app = Flask(__name__)
+    UPLOAD_FOLDER = f"{UPPER_PATH}/__wrapweb__/{url_site}_tmp_files"
+    if not os.path.isdir(UPLOAD_FOLDER):
+        os.mkdir(UPLOAD_FOLDER)
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     SECRET_KEY = os.urandom(32)
     app.config['SECRET_KEY'] = SECRET_KEY
 
-    @app.route('/download')
-    def download_file(path):
-        return send_file(path)
+    @app.route('/download/<path:filename>')
+    def downloading(filename):
+        return send_from_directory(app.config['UPLOAD_FOLDER'], filename, as_attachment=True)
 
     if ('account' not in parameters.keys() or not parameters['account']) and (
             'history' not in parameters.keys() or not parameters['history']):
-        @app.route('/' + url_site + '/', methods=['GET', 'POST'])
+        @app.route(f'/{url_site}', methods=['GET', 'POST'])
         def myfunc():
             result = None
-            try:
-                button = 'Получить результат'
-                if 'button' in parameters.keys():
-                    button = parameters['button']
-                form = MyForm(parameters['input'], button)
-            except NameError:
-                print('Не хватает параметров входных данных')
-            if form.validate_on_submit():
+            if request.method == 'POST':
                 annotations = function.__annotations__
                 types = list(annotations.values())
                 args: list = []
-                for i in range(parameters['input']['forms']):
-                    args.append(types[i](form.text_forms[i].data))
                 for i in range(parameters['input']['text']):
-                    file = form.file_forms[i].data
+                    form = request.form[f'text{i}']
+                    args.append(types[i](form))
+                for i in range(parameters['input']['files']):
+                    file = request.files[f'file{i}']
                     filename = secure_filename(file.filename)
-                    args.append(app.config['UPLOAD_FOLDER'] + filename)
                     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                    args.append(f"{app.config['UPLOAD_FOLDER']}/{filename}")
                 result = function(*args)
-
-            return render_template('index.html', parameters=parameters, url=url_site, form=form, result=result)
+                if result.__class__ == 'tuple':
+                    result = list(result)
+                else:
+                    result = [result]
+            return render_template('index.html', parameters=parameters, url=url_site, result=result, l=len(parameters['output']))
 
     return app
 
@@ -68,9 +58,9 @@ def wrapweb(url_site: str, name_file: str, parameters: dict):
     toweb(func, url_site, parameters).run(host='0.0.0.0', port=5001, debug=True)
 
 
-def get_parameters(name_file: str) -> list:
+def get_parameters(path_file: str) -> list:
     try:
-        with open(name_file) as file:
+        with open(path_file) as file:
             lines = [line.rstrip() for line in file]
         parameters = []
         for line in lines:
@@ -91,8 +81,9 @@ def route_url(now_path: str):
             route_url(dir)
         for file in files:
             if file == '__init__.py':
-                for url, name_func_file, parameters in get_parameters(file):
+                file_path = f"{now_path}/{file}"
+                for url, name_func_file, parameters in get_parameters(file_path):
                     wrapweb(url, name_func_file, parameters)
 
 
-route_url(os.getcwd())
+route_url(UPPER_PATH)
