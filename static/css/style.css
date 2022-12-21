@@ -181,7 +181,7 @@ footer {
   margin: 0;
   padding: 0;
   display:none;
-  font-size: 15px;
+  font-size: 14px;
 }
 
 .submenu > li {
@@ -221,4 +221,21 @@ footer {
 
 .more-symbol {
   font-size: 20px;
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
+}
+
+input[type=submit] {
+  padding:11px 15px; 
+  background:#213A5C;
+  width: 155px;
+  font-size: 14px; 
+  border:0 none;
+  cursor:pointer;
+  -webkit-border-radius: 5px;
+  border-radius: 4px; 
+  color: #fff;
 }

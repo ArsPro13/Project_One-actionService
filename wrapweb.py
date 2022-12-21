@@ -9,17 +9,20 @@ from werkzeug.utils import secure_filename
 from flask import send_from_directory
 
 CURRENT_PATH = os.getcwd()
-UPPER_PATH = os.path.dirname(os.getcwd())
 
 
 def toweb(function, url_site: str, parameters: dict):
     app = Flask(__name__)
-    UPLOAD_FOLDER = f"{UPPER_PATH}/__wrapweb__/{url_site}_tmp_files"
+    UPLOAD_FOLDER = f"{CURRENT_PATH}/__wrapweb__/{url_site}_tmp_files"
     if not os.path.isdir(UPLOAD_FOLDER):
         os.mkdir(UPLOAD_FOLDER)
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     SECRET_KEY = os.urandom(32)
     app.config['SECRET_KEY'] = SECRET_KEY
+    
+    @app.route('/')
+    def start_page():
+        return render_template('main_page.html')
 
     @app.route('/download/<path:filename>')
     def downloading(filename):
@@ -88,4 +91,8 @@ def route_url(now_path: str):
                     wrapweb(url, name_func_file, parameters)
 
 
-route_url(UPPER_PATH)
+print('!', CURRENT_PATH)
+
+
+
+route_url(CURRENT_PATH)
