@@ -27,10 +27,10 @@ def combination():
                    n += 1
             if add_ingredient in final_ingredients or n != len(final_ingredients):
                 ost[add_ingredient] = 0
-                add_ingredient = spisok[last_ingredient].index(max(spisok[last_ingredient]))
+                add_ingredient = spisok[last_ingredient].index(max(ost))
             else:
                 flag = False
-                final_ingredients.append(spisok[last_ingredient].index(max(spisok[last_ingredient])))
+                final_ingredients.append(spisok[last_ingredient].index(max(ost)))
         last_ingredient = final_ingredients[-1]
     for elem in final_ingredients:
         print(ingredients[elem])
