@@ -2,8 +2,9 @@ import img_convert
 from PIL import Image
 
 
-def process(path, dir_name, pixel_size):  # path to image in input
+def process(path, dir_name):  # path to image in input
     image = Image.open(path)
+    pixel_size = 5
     basic_colors = {(0, 0, 0): ["Black", 0], (255, 255, 0): ["Yellow", 0], (0, 255, 255): ["Cyan", 0],
                     (255, 0, 255): ["Magenta", 0], (255, 0, 0): ["Red", 0], (0, 255, 0): ["Green", 0],
                     (0, 0, 255): ["Blue", 0], (255, 255, 255): ["White", 0]}  # palette
