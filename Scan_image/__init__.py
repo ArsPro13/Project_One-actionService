@@ -1,0 +1,1 @@
+scan_text scan_image.py {'account': False, 'history': False, 'header': 'Считывание текста с изображения. Пожалуйста, напишите язык текста, который нужно считать, а также выберите изображение для считывания.', 'title': 'title', 'input': {'files': 1, 'text': 1}, 'output': ['__value__'], 'button': 'Сканировать'}
