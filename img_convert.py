@@ -13,9 +13,10 @@ def write_the_instruction(path, dir_name, new_img, basic_colors, pixel_size):
     for x in range(4):
         fpdf.text(65, 10 * x + 50, f"{list(basic_colors.values())[x + 4][0]}: {list(basic_colors.values())[x + 4][1]}")
         fpdf.text(110, 10 * x + 50, f"{list(basic_colors.values())[x][0]}: {list(basic_colors.values())[x][1]}")
+    width, height = new_img.size
+    fpdf.text(65, 95, f"Final size: {int(0.5 * width // pixel_size)}*{int(0.5 * height // pixel_size)} centimetres")
     fpdf.image(path, x=10, y=130, w=90)
     fpdf.image(f"{dir_name}/output.png", x=110, y=130, w=90)
-    width, height = new_img.size
     fpdf.add_page()
     k = 0
     fpdf.set_font("Arial", 'B', size=20)
@@ -28,15 +29,14 @@ def write_the_instruction(path, dir_name, new_img, basic_colors, pixel_size):
             fpdf.rect(10, 25, a, b)
             x = (min(30 * pixel_size + i, width) - i) / 2
             y = (min(40 * pixel_size + j, height) - j) / 2
-            fpdf.text(8 + a - (190 * x / width), 24 + b - (190 * y / width), str(k))
+            fpdf.text(8 + a - (190 * x / width), 26 + b - (190 * y / width), str(k))
     fpdf.set_font("Arial", size=18)
     k = 0
     for i in range(0, width, 30 * pixel_size):
         for j in range(0, height, 40 * pixel_size):
             k += 1
             fpdf.add_page()
-            fpdf.cell(0, 15,
-                      f"Rectangle {k}", align='C')
+            fpdf.cell(0, 15, f"Rectangle {k}", align='C')
             for x in range(0, 30 * pixel_size, pixel_size):
                 for y in range(0, 40 * pixel_size, pixel_size):
                     if (x + i < width) and (y + j < height):
@@ -84,4 +84,4 @@ def count_pixels(img, basic_colors, pixel_size):
         for j in range(width):
             basic_colors[img.getpixel((j, i))][1] += 1
     for x in list(basic_colors.values()):
-        x[1] //= pixel_size ** 2
+        x[1] //= (pixel_size ** 2)
