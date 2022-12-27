@@ -1,4 +1,4 @@
-# One-actionService
+# One-action service
 <h2>Команда</h2>
 <p><b>Исследование:</b>
   <ul> 
