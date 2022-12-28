@@ -1,0 +1,1 @@
+coctails coctails.py {'account': False, 'history': False, 'header': 'Header', 'title': 'Генерация коктейля', 'input': {'files': 0, 'text': 0}, 'output': ['__value__'], 'button': 'Сгенерировать коктейль'}

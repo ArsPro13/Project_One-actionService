@@ -1,0 +1,1 @@
+scan_text scan_image.py {'header': 'Загрузите фото', 'title': 'Сканирование текста', 'input': {'files': 1, 'text': 0}, 'output': ['__value__'], 'button': 'Сканировать'}

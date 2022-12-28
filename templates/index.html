@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>One Action Services</title>
+  <link rel="stylesheet" href="static/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div class="HeaderDivContLeft">
+            <div class="menu-btn" style>
+            <div class="more-symbol">
+                ≡
+            </div>
+            <ul class="submenu">
+                <li class="q1"><a href="/pixelize">Пикселиратор</a></li>
+                <li class="q2"><a href="/coctails">Коктейли</a></li>
+                <li class="q3"><a href="/scan_text">Считывание текста</a></li>
+            </ul>
+            </div>
+        </div>
+        <div class="HeaderDivContLeft">
+            <a style="font-size: 25px;" href="/">One Action Services</a>
+        </div>
+    </header>
+
+    <div style="margin-top: 1%; margin-left: 3%; height: 1500px;">
+        <h1>{{parameters['title']}}</h1> 
+        <form method="POST" enctype="multipart/form-data" style="margin-top: 5%;">
+            {% for i in range(parameters['input']['text']) %}
+                <input type="text" name="text{{i}}">
+            {% endfor %}
+            {% for i in range(parameters['input']['files']) %}
+            <input type="file" name="file{{i}}"><br><br><br>
+            {% endfor %}
+            <input type=submit value={{parameters['button']}}>
+        </form> <br><br><br>
+        {% if result %}
+            {% for i in range(l) %}
+            {% set count = 1 %}
+                {% if parameters['output'][i] == '__file__' %}
+                    <a style="color: black" href="/download/{{result[i - count]}}">{{result[i - count]}}</a>
+                {% elif parameters['output'][i] == '__value__' %}
+                    <p>{{result[i - count]}}</p>
+                {% else %}
+                    <p>{{parameters['output'][i]}}</p>
+                {% set count = count + 1 %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <footer>
+        <br>
+        <div class="footerDivContLeft">
+        HSSE-OneAction-winter-2022 <br><br>
+        mail@mail.mail
+        </div>
+        <div class="footerDivContRight">
+        ContactContact <br><br>
+        ContactContact
+        </div>
+    </footer>
+    <script src="static/js/main.js"></script>
+</body>
+</html>
