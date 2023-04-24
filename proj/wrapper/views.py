@@ -5,9 +5,6 @@ from . import services
 
 views = []
 
-def f():
-    return 1
-
 def wrap(f):
     def my_view(request):
        return HttpResponse(str(f()))
