@@ -8,10 +8,11 @@
 </head>
 
 <body>
-  <form action="/charfields/" method="post">
-    <label for="charfield_name">Your data: </label>
-    <input id="your_data" type="text" name="your_data" value="charfield name">
+  <form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_table }}
     <input type="submit" value="OK">
   </form>
+  {{ res }}
 </body>
 </html>

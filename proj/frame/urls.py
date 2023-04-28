@@ -20,7 +20,6 @@ from wrapper import functions as fun
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', wv.wrap(fun.f)),
 ]
 
 for v in wv.views:
