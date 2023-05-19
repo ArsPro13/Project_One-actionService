@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from wrapper import views as wv
-from wrapper import functions as fun
+from wrapper import services as fun
 
 urlpatterns = [
     path('admin/', admin.site.urls),

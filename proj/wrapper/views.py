@@ -4,25 +4,38 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from urllib import request
 from django import forms
-
+from copy import copy
 from . import services
+from .types import Text 
 
 views = []
 
 def args(f):
     return(f.__annotations__)
 
+def field(s, i):
+    print(type(s))
+    if (s == int):
+        return forms.IntegerField(label = i)
+    if (s == str):
+        return forms.CharField(label = i)
+    if (s == Text):
+        return forms.CharField(label = i, widget=forms.Textarea)
+
 def wrap(f):
     def my_view(request):
-        arguments = args(f)
+        arguments = copy(args(f))
         temp = {}
         for i in arguments:
-            temp[i] = forms.CharField(label = i)
-        
+            print(arguments[i])
+            temp[i] = field(arguments[i], i)
+
         if (request.method == 'POST'):
             form = type('MyF', (forms.Form, ), temp)()
-            for  i in arguments.keys():
-                arguments[i] = request.POST[i]
+            for i in arguments.keys():
+                types = copy(f.__annotations__)
+                print(types)
+                arguments[i] = types[i](request.POST[i])
             
             res = f(**arguments)
             
