@@ -11,3 +11,6 @@ def f(a: Text):
 
 def ff(a: int, b: int):
     return a + b
+
+def fff(a: int, b: int, c: int, d: int, e: int,):
+    return a + b + c + d + e
