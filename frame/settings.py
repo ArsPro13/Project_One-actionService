@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os, fnmatch
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'wrapper',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -122,3 +124,17 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CRONJOBS = [
+    # ('*/1 * * * *', 'wrapper.crons.cron.hi')
+]
+CRONJOBS.clear()
+listOfFiles = os.listdir('wrapper/crons')  
+pattern = "*.py"  
+for entry in listOfFiles:  
+    if fnmatch.fnmatch(entry, pattern):
+            print(entry[:-2])
+            s1 = 'wrapper.crons.'
+            CRONJOBS.append(('*/1 * * * *', s1+entry[:-2]+'hi'))
+    
+print(CRONJOBS)
