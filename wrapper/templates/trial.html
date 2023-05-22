@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      background-color: #667ce0;
+      box-shadow: 0 0 40px rgba(33, 32, 32, 0.5);
+      display: grid;
+      grid-template-columns: 1fr fr;
+      grid-template-rows: 1fr 1fr;
+      grid-template-areas:
+      "main_text form"
+      "main_text output";
+      margin-left: 10vw;
+      margin-top: 10vh;
+      padding: 0;
+      width: 80vw;
+      height: 80vh;
+      position: relative;
+    }
+
+    form {
+      grid-area: form;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .main_text {
+      grid-area: main_text;
+      display: flex;
+      padding-left: 4vw;
+      width: 80%;
+      align-items: center;
+      color:#f1f2f7;
+      font-size: 30px;
+    }
+
+    input[type="number"],
+    input[type="text"] {
+      width: 50%;
+      height: 25%;
+      border: none;
+      border-bottom: 2px solid white;
+      outline: none;
+      background-color: #667ce0;
+      color: white;
+      font-size: 20px;
+    }
+
+    label {
+      font-size: 20px;
+      color: rgb(69, 59, 101);
+    }
+    
+    input[type="submit"] {
+      background-color: #f1f2f7;
+      margin-top: 5%;
+      width: 10vw;
+      height: 10%;
+      color: rgb(90, 66, 210);
+      cursor: pointer;
+    }
+
+    .output {
+      grid-area: output;
+      display: flex;
+      align-items: center;
+
+    }
+
+    textarea {
+      margin: 0 auto;
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      border: none;
+      border-bottom: 2px solid white;
+      background-color: #667ce0;
+      outline: none;
+      color: white;
+      font-size: 20px;
+    }
+
+    ::placeholder {
+      color: rgb(230, 216, 216);
+      text-align: center;
+      font-size: 15px;
+    }
+
+    @media (max-width: 900px) {
+      .main_text {
+        font-size: 15px;
+      }
+
+      ::placeholder {
+        font-size: 10px;
+      }
+
+      textarea {
+        font-size: 10px;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .main_text {
+        grid-area: none;
+        font-size: 0px;
+      }
+
+      ::placeholder {
+        font-size: 5px;
+      }
+
+      textarea {
+        font-size: 5px;
+      }
+    }
+    
+  </style>
+
+</head>
+
+<body>
+  <p class="main_text">
+    Теперь здесь можно удобно добавлять любой ваш сервис с любым количеством полей! Пользуйтесь!
+  </p>
+  <form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_table }}
+    <input type="submit" class="submit" value="OK">
+  </form>
+  <div class="output">
+    <textarea placeholder="Результат работы функции">{{ res }}</textarea>
+  </div>
+ </body>
+</html>
