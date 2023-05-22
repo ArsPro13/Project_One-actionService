@@ -1,13 +1,15 @@
 from __future__ import annotations
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from urllib import request
 from django import forms
+from django.db import models
 from copy import copy
 from . import services
-from .types import Text 
+from .types import Text, File 
+from .forms import GeeksForm
 
 views = []
 
@@ -23,21 +25,25 @@ def field(s, i):
     if (s == Text):
         return forms.CharField(label = i, widget=forms.Textarea)
 
+
 def wrap(f):
     def my_view(request):
         arguments = copy(args(f))
         temp = {}
         for i in arguments:
-            print(arguments[i])
-            temp[i] = field(arguments[i], i)
+            if (arguments[i] == File):
+                temp[i] = forms.FileField()
+            else:
+                temp[i] = field(arguments[i], i)
 
         if (request.method == 'POST'):
             form = type('MyF', (forms.Form, ), temp)()
             for i in arguments.keys():
                 types = copy(f.__annotations__)
-                print(types)
-                arguments[i] = types[i](request.POST[i])
-            
+                if (types[i] != File):
+                    arguments[i] = types[i](request.POST[i])
+                else:
+                    arguments[i] = request.FILES['a'].read()
             res = f(**arguments)
             
             #в f передаем словарь

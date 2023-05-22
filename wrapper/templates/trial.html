@@ -130,7 +130,7 @@
   <p class="main_text">
     Теперь здесь можно удобно добавлять любой ваш сервис с любым количеством полей! Пользуйтесь!
   </p>
-  <form action="" method="post">
+  <form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_table }}
     <input type="submit" class="submit" value="OK">
