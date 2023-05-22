@@ -5,9 +5,11 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from urllib import request
 from django import forms
+from django.db import models
 from copy import copy
 from . import services
-from .types import Text 
+from .types import Text, File 
+from .forms import GeeksForm
 
 views = []
 
@@ -23,20 +25,31 @@ def field(s, i):
     if (s == Text):
         return forms.CharField(label = i, widget=forms.Textarea)
 
+
+def handle_uploaded_file(f):  
+    with open('wrapper/upload/' + f.name, 'wb+') as destination:  
+        for chunk in f.chunks():
+            destination.write(chunk) 
+
 def wrap(f):
     def my_view(request):
         arguments = copy(args(f))
         temp = {}
         for i in arguments:
-            print(arguments[i])
-            temp[i] = field(arguments[i], i)
+            if (arguments[i] == File):
+                temp[i] = forms.FileField()
+            else:
+                temp[i] = field(arguments[i], i)
 
         if (request.method == 'POST'):
-            form = type('MyF', (forms.Form, ), temp)()
+            form = type('MyF', (forms.Form, ), temp, request.FILES)()
             for i in arguments.keys():
                 types = copy(f.__annotations__)
-                print(types)
-                arguments[i] = types[i](request.POST[i])
+                if (types[i] != File):
+                    arguments[i] = types[i](request.POST[i])
+                else:
+                    print(request.FILES)
+                    #handle_uploaded_file(request.FILES["filefield"])
             
             res = f(**arguments)
             
