@@ -26,11 +26,6 @@ def field(s, i):
         return forms.CharField(label = i, widget=forms.Textarea)
 
 
-def handle_uploaded_file(f):  
-    with open('wrapper/upload/' + f.name, 'wb+') as destination:  
-        for chunk in f.chunks():
-            destination.write(chunk) 
-
 def wrap(f):
     def my_view(request):
         arguments = copy(args(f))
@@ -42,15 +37,13 @@ def wrap(f):
                 temp[i] = field(arguments[i], i)
 
         if (request.method == 'POST'):
-            form = type('MyF', (forms.Form, ), temp, request.FILES)()
+            form = type('MyF', (forms.Form, ), temp)()
             for i in arguments.keys():
                 types = copy(f.__annotations__)
                 if (types[i] != File):
                     arguments[i] = types[i](request.POST[i])
                 else:
-                    print(request.FILES)
-                    #handle_uploaded_file(request.FILES["filefield"])
-            
+                    arguments[i] = request.FILES['a'].read()
             res = f(**arguments)
             
             #в f передаем словарь

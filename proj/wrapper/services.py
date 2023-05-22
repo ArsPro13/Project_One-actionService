@@ -11,7 +11,7 @@ def n100():
     return sum(range(100))
 
 def f(a: File):
-    return 'got'
+    return a.decode('utf8')
 
 def ff(a: int, b: int):
     return a + b
