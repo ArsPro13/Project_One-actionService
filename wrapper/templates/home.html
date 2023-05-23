@@ -1,3 +1,7 @@
+Лиза Сикалова, [23 мая 2023 г., 13:14:43]:
+Sticky Footer Navbar Template · Bootstrap v5.2
+
+Лиза Сикалова, [23 мая 2023 г., 13:14:43]:
 {% load static %}
 <!doctype html>
 <html lang="en" class="h-100">
@@ -106,10 +110,14 @@
 
       .card2 {
         grid-area: card2;
+        border: 1px solid rgb(167, 205, 238);
+        box-shadow: 0 0 10px 0 rgb(36, 76, 108);
       }
 
       .card3 {
         grid-area: card3;
+        border: 1px solid rgb(167, 205, 238);
+       box-shadow: 0 0 10px 0 rgb(36, 76, 108);
       }
 
       .service1 {
@@ -132,6 +140,46 @@
         background-position: center center;
       }
 
+      .service2 {
+        width: 100%;
+        height: 100%;
+      }
+
+      .service2_text {
+        font-size: 20px;
+        color:rgb(34, 15, 96);
+        text-decoration: none;
+      }
+
+      .service2_image {
+        width: 100%;
+        height: 65%;
+        background-image: url("{% static 'photo2.jpg'%}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+      }
+
+      .service3 {
+        width: 100%;
+        height: 100%;
+      }
+
+      .service3_text {
+        font-size: 20px;
+        color:rgb(34, 15, 96);
+        text-decoration: none;
+      }
+
+      .service3_image {
+        width: 100%;
+        height: 65%;
+        background-image: url("{% static 'photo3.jpg'%}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+      }
+
       .footer {
         height: 12%;
       }
@@ -142,7 +190,6 @@
       }
     </style>
 
-    
     <!-- Custom styles for this template -->
     <link href="sticky-footer-navbar.css" rel="stylesheet">
   </head>
@@ -177,19 +224,25 @@
 <!-- Begin page content -->
 <div class="card-container">
   <div class="card card1">
-    <a class="service1" href="/f">
+    <a class="service1" href="/sendmail">
       <div class="service1_image">
       </div>
-      <p class="service1_text">Первый сервис</p>
+      <p class="service1_text">Отправка писем</p>
     </a>
   </div>
   <div class="card card2">
-    <h2>Карточка 2</h2>
-    <p>Описание карточки 2</p>
+    <a class="service2" href="/f">
+      <div class="service2_image">
+      </div>
+      <p class="service2_text">Работа с файлами</p>
+    </a>
   </div>
   <div class="card card3">
-    <h2>Карточка 3</h2>
-    <p>Описание карточки 3</p>
+    <a class="service3" href="/ff">
+      <div class="service3_image">
+      </div>
+      <p class="service3_text">Работа с числами</p>
+    </a>
   </div>
 </div>
 
@@ -203,6 +256,5 @@
 
     <script src="https://getbootstrap.com/docs/5.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
-      
-  </body>
+</body>
 </html>
